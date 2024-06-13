@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "you_win.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
