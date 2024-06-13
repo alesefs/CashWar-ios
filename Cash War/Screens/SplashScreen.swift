@@ -59,7 +59,7 @@ struct SplashScreenView: View {
             }
             .scaleEffect(scale)
             .onAppear{
-                withAnimation(.easeIn(duration: 0.8)) {
+                withAnimation(.bouncy(duration: 0.8, extraBounce: 0.2)) {
                     self.scale = 1
                 }
             }
