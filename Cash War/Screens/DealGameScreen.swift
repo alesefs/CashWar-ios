@@ -139,7 +139,7 @@ struct DealGameScreen: View {
         }
     }
     
-    func chooseCash(intValue: Int) -> CashMoneyStats {
+    private func chooseCash(intValue: Int) -> CashMoneyStats {
         switch intValue {
             case 1...15:
                 return .money1
@@ -166,22 +166,25 @@ struct DealGameScreen: View {
         }
     }
     
-    func NavigateToEndGame(playerWin: Bool) {
+    private func NavigateToEndGame(playerWin: Bool) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             navigation.path.append(Screens.EndGameScreen(isWin: playerWin))
         }
     }
     
-    func nextDeal() {
+    private func nextDeal() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             diffTextPlayer = ""
             diffTextCPU = ""
-            canPlay = true
             waitRound = false
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            canPlay = true
         }
     }
     
-    func showStats(diff: Int) {
+    private func showStats(diff: Int) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
             if playerCash > cpuCash {
                 playerBank += diff
@@ -204,7 +207,7 @@ struct DealGameScreen: View {
         }
     }
     
-    func diffTextColor(signal: String) -> Color {
+    private func diffTextColor(signal: String) -> Color {
         return if signal.contains("+") {
             Color(hex: 0xA5D6A7, opacity: 1.0)
         } else if signal.contains("-") {

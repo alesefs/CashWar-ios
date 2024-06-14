@@ -8,6 +8,26 @@
 import SwiftUI
 
 struct Bet10GameScreen: View {
+    @EnvironmentObject var navigation: Navigation
+    
+    @State private var playerCashValue = 0
+    @State private var playerCash = 0
+    @State private var playerBank = 2000
+    @State private var diffTextPlayer = ""
+    
+    @State private var cpuCashValue = 0
+    @State private var cpuCash = 0
+    @State private var cpuBank = 2000
+    @State private var diffTextCPU = ""
+    
+    @State private var inGame = true
+    @State private var playerWin: Bool = true
+    @State private var canPlay: Bool = true
+    @State private var waitRound: Bool = false
+    
+    @State private var isFirstRound: Bool = true
+    @State private var countRound = 10
+    
     var body: some View {
         
         ZStack(alignment: .center) {
@@ -20,11 +40,188 @@ struct Bet10GameScreen: View {
             Rectangle()
                 .opacity(0.5)
                 .ignoresSafeArea()
+            
+            VStack(spacing: 32.0) {
+                                
+                Image("cash_war_logo")
+                    .resizable()
+                    .frame(width: 170, height: 100)
+                    .aspectRatio(contentMode: .fit)
+                
+                HStack(spacing: 16.0) {
+                    Text("Player's Bank: $\(playerBank)")
+                        .foregroundColor(.white)
+                        .font(.regularSmall)
+                        .opacity(0.9)
+                        .lineLimit(1)
+                    
+                    Text(diffTextPlayer)
+                        .foregroundColor(diffTextColor(signal: diffTextPlayer))
+                        .font(.regularLarge)
+                        .opacity(0.9)
+                        .lineLimit(1)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 32.0)
+                
+                CashMoney(
+                    value: chooseCash(intValue: playerCashValue),
+                    size: .normal,
+                    waitRound: waitRound,
+                    animation: isFirstRound ? .idle : .leading,
+                    selected: false)
+                
+                Text("Vs.")
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .font(.regularMedium)
+                    .opacity(0.9)
+                    .lineLimit(1)
+                    .padding(.horizontal, 32.0)
+                
+                
+                CashMoney(
+                    value: chooseCash(intValue: cpuCashValue),
+                    size: .normal,
+                    waitRound: waitRound,
+                    animation:  isFirstRound ? .idle : .trailling,
+                    selected: false)
+                
+                HStack(spacing: 16.0) {
+                    Text("CPU's Bank: $\(cpuBank)")
+                        .foregroundColor(.white)
+                        .font(.regularSmall)
+                        .opacity(0.9)
+                        .lineLimit(1)
+                    
+                    Text(diffTextCPU)
+                        .foregroundColor(diffTextColor(signal: diffTextCPU))
+                        .font(.regularLarge)
+                        .opacity(0.9)
+                        .lineLimit(1)
+                        
+                }
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.horizontal, 32.0)
+                
+                CashButton(buttonStats: .positive(title: "Deal \(countRound)"), enable: canPlay) {
+                    isFirstRound = false
+                    
+                    playerCashValue = Int.random(in: 1 ... 91)
+                    playerCash = chooseCash(intValue: playerCashValue).stats.value
+                    
+                    cpuCashValue = Int.random(in: 1 ... 91)
+                    cpuCash = chooseCash(intValue: cpuCashValue).stats.value
+                    
+                    let diff = abs(playerCash - cpuCash)
+                    
+                    showStats(diff: diff)
+                    
+                    countRound -= 1
+                    
+                    inGame = playerBank > 0 && cpuBank > 0 && countRound > 0
+                    
+                    canPlay = false
+                    waitRound = true
+                    
+                    if !inGame {
+                        playerWin = playerBank > 0 && cpuBank < 1 || playerBank > cpuBank
+                        NavigateToEndGame(playerWin: playerWin)
+                    } else {
+                        nextBet()
+                    }
+                    
+                }
+                .frame(width: 250, height: 55)
+            }
+            .padding(.horizontal, 32.0)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .navigationDestination(for: Screens.self) { screen in
+            NavigationController.navigate(to: screen)
+        }
+    }
+    
+    private func chooseCash(intValue: Int) -> CashMoneyStats {
+        switch intValue {
+            case 1...15:
+                return .money1
+            case 16...30:
+                return .money2
+            case 31...45:
+                return .money5
+            case 46...55:
+                return .money10
+            case 56...65:
+                return .money20
+            case 66...75:
+                return .money50
+            case 76...80:
+                return .money100
+            case 81...85:
+                return .money200
+            case 86...90:
+                return .money500
+            case 91:
+                return .money500
+            default:
+                return .moneyQuestion
+        }
+    }
+    
+    private func NavigateToEndGame(playerWin: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            navigation.path.append(Screens.EndGameScreen(isWin: playerWin))
+        }
+    }
+    
+    private func nextBet() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            diffTextPlayer = ""
+            diffTextCPU = ""
+            waitRound = false
         }
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            canPlay = true
+        }
+    }
+    
+    private func showStats(diff: Int) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+            if playerCash > cpuCash {
+                playerBank += diff
+                cpuBank -= diff
+                
+                diffTextPlayer = "+\(diff)"
+                diffTextCPU = "-\(diff)"
+                
+            } else if playerCash < cpuCash {
+                playerBank -= diff
+                cpuBank += diff
+                
+                diffTextPlayer = "-\(diff)"
+                diffTextCPU = "+\(diff)"
+                
+            } else {
+                diffTextPlayer = "0"
+                diffTextCPU = "0"
+            }
+        }
+    }
+    
+    private func diffTextColor(signal: String) -> Color {
+        return if signal.contains("+") {
+            Color(hex: 0xA5D6A7, opacity: 1.0)
+        } else if signal.contains("-") {
+            Color(hex: 0xE37979, opacity: 1.0)
+        } else {
+            .white
+        }
     }
 }
 
 #Preview {
     Bet10GameScreen()
+        .environmentObject(Navigation())
 }
