@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EndGameScreen: View {
     
+    @EnvironmentObject var navigation: Navigation
     @State var isWin: Bool
     
     init(isWin: Bool) {
@@ -41,10 +42,14 @@ struct EndGameScreen: View {
                     LoseGame()
                 }
                 
-                Spacer()
+                Spacer()            
                 
                 CashButton(buttonStats: .positive(title: "Menu"), enable: true) {
                     print("menu click")
+                    navigation.path.removeAll()
+                }
+                .navigationDestination(for: Screens.self) { screen in
+                    NavigationController.navigate(to: screen)
                 }
                 .frame(maxWidth: 300)
             }
@@ -74,8 +79,10 @@ struct LoseGame: View {
 
 #Preview {
     EndGameScreen(isWin: true)
+        .environmentObject(Navigation())
 }
 
 #Preview {
     EndGameScreen(isWin: false)
+        .environmentObject(Navigation())
 }

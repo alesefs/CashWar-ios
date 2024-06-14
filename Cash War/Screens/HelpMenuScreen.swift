@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct HelpMenuScreen: View {
+    @EnvironmentObject var navigation: Navigation
+    
     var body: some View {
         ZStack(alignment: .center) {
             Image("table_green")
@@ -52,8 +54,13 @@ struct HelpMenuScreen: View {
                 
                 CashButton(buttonStats: .positive(title: "Menu"), enable: true) {
                     print("menu click")
+                    navigation.path.removeAll()
+                }
+                .navigationDestination(for: Screens.self) { screen in
+                    NavigationController.navigate(to: screen)
                 }
                 .frame(maxWidth: 300)
+
             }
             .padding(.horizontal, 32.0)
             .padding(.vertical, 64.0)
@@ -65,4 +72,5 @@ struct HelpMenuScreen: View {
 
 #Preview {
     HelpMenuScreen()
+        .environmentObject(Navigation())
 }

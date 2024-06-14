@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F0371DA02C1CBD360040E1A5 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0371D9F2C1CBD360040E1A5 /* Router.swift */; };
 		F04620612C18BE6B005680CF /* Cash_WarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04620602C18BE6B005680CF /* Cash_WarApp.swift */; };
 		F04620632C18BE6B005680CF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F04620622C18BE6B005680CF /* ContentView.swift */; };
 		F04620652C18BE6C005680CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F04620642C18BE6C005680CF /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F0371D9F2C1CBD360040E1A5 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		F046205D2C18BE6B005680CF /* Cash War.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cash War.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F04620602C18BE6B005680CF /* Cash_WarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cash_WarApp.swift; sourceTree = "<group>"; };
 		F04620622C18BE6B005680CF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +59,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F0371D9E2C1CBD2C0040E1A5 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				F0371D9F2C1CBD360040E1A5 /* Router.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
 		F04620542C18BE6B005680CF = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +128,7 @@
 		F046207F2C1A38AD005680CF /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				F0371D9E2C1CBD2C0040E1A5 /* Router */,
 				F046207B2C19F2AB005680CF /* MainMenuScreen.swift */,
 				F046207D2C1A0767005680CF /* DealGameScreen.swift */,
 				F04620802C1A38CB005680CF /* ChallengerGameScreen.swift */,
@@ -213,6 +224,7 @@
 				F046207E2C1A0767005680CF /* DealGameScreen.swift in Sources */,
 				F04620872C1A391B005680CF /* HelpMenuScreen.swift in Sources */,
 				F046207C2C19F2AB005680CF /* MainMenuScreen.swift in Sources */,
+				F0371DA02C1CBD360040E1A5 /* Router.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
