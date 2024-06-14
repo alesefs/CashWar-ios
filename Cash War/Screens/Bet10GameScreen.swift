@@ -104,7 +104,7 @@ struct Bet10GameScreen: View {
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding(.horizontal, 32.0)
                 
-                CashButton(buttonStats: .positive(title: "Deal \(countRound)"), enable: canPlay) {
+                CashButton(buttonStats: .positive(title: "Bet \(countRound)"), enable: canPlay) {
                     isFirstRound = false
                     
                     playerCashValue = Int.random(in: 1 ... 91)
@@ -139,33 +139,6 @@ struct Bet10GameScreen: View {
         }
         .navigationDestination(for: Screens.self) { screen in
             NavigationController.navigate(to: screen)
-        }
-    }
-    
-    private func chooseCash(intValue: Int) -> CashMoneyStats {
-        switch intValue {
-            case 1...15:
-                return .money1
-            case 16...30:
-                return .money2
-            case 31...45:
-                return .money5
-            case 46...55:
-                return .money10
-            case 56...65:
-                return .money20
-            case 66...75:
-                return .money50
-            case 76...80:
-                return .money100
-            case 81...85:
-                return .money200
-            case 86...90:
-                return .money500
-            case 91:
-                return .money500
-            default:
-                return .moneyQuestion
         }
     }
     
@@ -207,16 +180,6 @@ struct Bet10GameScreen: View {
                 diffTextPlayer = "0"
                 diffTextCPU = "0"
             }
-        }
-    }
-    
-    private func diffTextColor(signal: String) -> Color {
-        return if signal.contains("+") {
-            Color(hex: 0xA5D6A7, opacity: 1.0)
-        } else if signal.contains("-") {
-            Color(hex: 0xE37979, opacity: 1.0)
-        } else {
-            .white
         }
     }
 }

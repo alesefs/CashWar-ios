@@ -18,9 +18,7 @@ extension Color {
             opacity: opacity
         )
     }
-}
-
-extension Color {
+    
     static let money1Light = Color(hex: 0xA5D6A7, opacity: 1.0)
     static let money1Dark = Color(hex: 0x388E3C, opacity: 1.0)
     
@@ -71,9 +69,7 @@ extension Color {
     static let negativeButtonLight = Color(hex: 0xFFF5F5, opacity: 1.0)
     static let negativeButtonDark = Color(hex: 0xE5BFBF, opacity: 1.0)
     static let negativeButtonText = Color(hex: 0x752D2D, opacity: 1.0)
-}
-
-extension Color {
+    
     static var random: Color {
         return Color(
             red: .random(in: 0...1),
@@ -126,4 +122,53 @@ extension String {
         let remainingLetters = self.dropFirst().lowercased()
         return firstLetter + remainingLetters
     }
+    
+//    func diffTextColor() -> Color {
+//        return if self.contains("+") {
+//            Color(hex: 0xA5D6A7, opacity: 1.0)
+//        } else if self.contains("-") {
+//            Color(hex: 0xE37979, opacity: 1.0)
+//        } else {
+//            .white
+//        }
+//    }
 }
+
+
+func diffTextColor(signal: String) -> Color {
+    return if signal.contains("+") {
+        Color(hex: 0xA5D6A7, opacity: 1.0)
+    } else if signal.contains("-") {
+        Color(hex: 0xE37979, opacity: 1.0)
+    } else {
+        .white
+    }
+}
+
+func chooseCash(intValue: Int) -> CashMoneyStats {
+    switch intValue {
+        case 1...15:
+            return .money1
+        case 16...30:
+            return .money2
+        case 31...45:
+            return .money5
+        case 46...55:
+            return .money10
+        case 56...65:
+            return .money20
+        case 66...75:
+            return .money50
+        case 76...80:
+            return .money100
+        case 81...85:
+            return .money200
+        case 86...90:
+            return .money500
+        case 91:
+            return .money500
+        default:
+            return .moneyQuestion
+    }
+}
+

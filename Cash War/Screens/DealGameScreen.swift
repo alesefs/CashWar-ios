@@ -139,33 +139,6 @@ struct DealGameScreen: View {
         }
     }
     
-    private func chooseCash(intValue: Int) -> CashMoneyStats {
-        switch intValue {
-            case 1...15:
-                return .money1
-            case 16...30:
-                return .money2
-            case 31...45:
-                return .money5
-            case 46...55:
-                return .money10
-            case 56...65:
-                return .money20
-            case 66...75:
-                return .money50
-            case 76...80:
-                return .money100
-            case 81...85:
-                return .money200
-            case 86...90:
-                return .money500
-            case 91:
-                return .money500
-            default:
-                return .moneyQuestion
-        }
-    }
-    
     private func NavigateToEndGame(playerWin: Bool) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             navigation.path.append(Screens.EndGameScreen(isWin: playerWin))
@@ -204,16 +177,6 @@ struct DealGameScreen: View {
                 diffTextPlayer = "0"
                 diffTextCPU = "0"
             }
-        }
-    }
-    
-    private func diffTextColor(signal: String) -> Color {
-        return if signal.contains("+") {
-            Color(hex: 0xA5D6A7, opacity: 1.0)
-        } else if signal.contains("-") {
-            Color(hex: 0xE37979, opacity: 1.0)
-        } else {
-            .white
         }
     }
 }
