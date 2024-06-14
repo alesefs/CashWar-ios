@@ -31,8 +31,8 @@ enum CashButtonStats: Hashable {
 }
 
 struct CashButton: View {
-    @State var buttonStats: CashButtonStats
-    @State var enable: Bool = true
+    var buttonStats: CashButtonStats
+    var enable: Bool = true
     var onClick: () -> Void
     
     init(buttonStats: CashButtonStats, enable: Bool, onClick: @escaping () -> Void) {
@@ -117,7 +117,11 @@ struct CashButton: View {
 
 #Preview {
     CashButton(
-        buttonStats: .neutral(title: "texto", titleSize: 30.0), enable: true, onClick: { print("click!") }
+        buttonStats: .neutral(title: "texto", titleSize: 30.0),
+        enable: true,
+        onClick: {
+            print("click!")
+        }
     )
 }
 

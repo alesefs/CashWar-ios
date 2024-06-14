@@ -157,15 +157,42 @@ enum CashMoneyAnimation: Hashable {
 }
 
 struct CashMoney: View {
-    @State var value: CashMoneyStats
-    @State var size: CashMoneySize
+    var value: CashMoneyStats
+    var size: CashMoneySize
+    var waitRound: Bool = false
+    var animation: CashMoneyAnimation = CashMoneyAnimation.idle
+    var selected: Bool = false
     
-    init(value: CashMoneyStats, size: CashMoneySize) {
+    private var offsetLeading: CGFloat = -500
+    private var offsetTrailling: CGFloat = 500
+    private var offsetIdle: CGFloat = 0
+    private var animationAmount: CGFloat = 1.0
+    
+    init(
+        value: CashMoneyStats,
+        size: CashMoneySize,
+        waitRound: Bool,
+        animation: CashMoneyAnimation,
+        selected: Bool
+    ) {
         self.value = value
         self.size = size
+        self.waitRound = waitRound
+        self.animation = animation
+        self.selected = selected
     }
     
     var body: some View {
+        
+        let offset = switch animation {
+            case .idle:
+                offsetIdle
+            case .leading:
+                offsetLeading
+            case .trailling:
+                offsetTrailling
+        }
+        
         ZStack {
             Rectangle()
                 .foregroundColor(value.stats.lightColor)
@@ -216,9 +243,10 @@ struct CashMoney: View {
                         .frame(width: 70 / size.fontSize)
                     
                     let cashValue = (value == .moneyQuestion) ? "?" : "\(value.stats.value)"
+                    let cashColor = (value == .moneyQuestion) ? Color.random : value.stats.lightColor
                     
                     Text(cashValue)
-                        .foregroundColor(value.stats.lightColor)
+                        .foregroundColor(cashColor)
                         .font(
                             .regular(
                                 size: value.stats.fontSize / size.fontSize
@@ -237,13 +265,22 @@ struct CashMoney: View {
             }
             
         }
-        .frame(width: 300 / size.fontSize, height: 110 / size.fontSize)
+        .frame(width: 220 / size.fontSize, height: 110 / size.fontSize)
+        .offset(x: waitRound ? 0 : offset)
+        .animation(.easeInOut(duration: 0.8), value: waitRound)
+        
     }
     
 }
 
 #Preview {
-    CashMoney(value: .money1, size: .normal)
+    CashMoney(
+        value: .money1,
+        size: .normal,
+        waitRound: false,
+        animation: .idle,
+        selected: false)
+    
 }
 
 struct CashMoney_Previews: PreviewProvider {
@@ -270,7 +307,13 @@ struct CashMoney_Previews: PreviewProvider {
                     ScrollView(.horizontal) {
                         HStack(alignment: .top) {
                             ForEach(allCasesSize, id: \.self) { size in
-                                CashMoney(value: cash, size: size)
+                                CashMoney(
+                                    value: cash, 
+                                    size: size,
+                                    waitRound: false,
+                                    animation: .idle,
+                                    selected: false
+                                )
                             }
                         }
                     }

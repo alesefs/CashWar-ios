@@ -73,6 +73,16 @@ extension Color {
     static let negativeButtonText = Color(hex: 0x752D2D, opacity: 1.0)
 }
 
+extension Color {
+    static var random: Color {
+        return Color(
+            red: .random(in: 0...1),
+            green: .random(in: 0...1),
+            blue: .random(in: 0...1)
+        )
+    }
+}
+
 extension Font {
     static let regularSmall = Font.custom("ChauPhilomeneOne-Regular", size: 25.0)
     static let regularMedium = Font.custom("ChauPhilomeneOne-Regular", size: 30.0)

@@ -9,10 +9,23 @@ import SwiftUI
 
 struct ChallengerGameScreen: View {
     var body: some View {
-        Text("Challenger Game Screen")
+        
+        ZStack(alignment: .center) {
+            Image("table_green")
+                .resizable()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .aspectRatio(contentMode: .fill)
+                .ignoresSafeArea()
+            
+            Rectangle()
+                .opacity(0.5)
+                .ignoresSafeArea()
+        }
+        
     }
 }
 
 #Preview {
     ChallengerGameScreen()
+        .environmentObject(Navigation())
 }
