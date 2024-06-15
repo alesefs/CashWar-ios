@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 struct ChallengerGameScreen: View {
     @EnvironmentObject var navigation: Navigation
@@ -197,6 +198,18 @@ struct ChallengerGameScreen: View {
                 cash.stats.index != playerCashLeft.stats.index && cash.stats.index != playerCashCenter.stats.index
             }
             playerCashRight = (valueRight.randomElement())!
+            
+            let cashArray = [
+                playerCashLeft.stats.index,
+                playerCashCenter.stats.index,
+                playerCashRight.stats.index
+            ]
+            let numMax = cashArray.reduce(Int.min, { max($0, $1) })
+            let numMin = cashArray.reduce(Int.max, { min($0, $1) })
+            let valueCPU = cashValues.filter { cash in
+                cash.stats.index >= numMin && cash.stats.index <= numMax
+            }
+            cpuCashValue = (valueCPU.randomElement())!
         }
         .navigationDestination(for: Screens.self) { screen in
             NavigationController.navigate(to: screen)
@@ -288,7 +301,18 @@ struct ChallengerGameScreen: View {
             }
             playerCashRight = (valueRight.randomElement())!
             
-            cpuCashValue = (cashValues.randomElement())!
+            let cashArray = [
+                playerCashLeft.stats.index,
+                playerCashCenter.stats.index,
+                playerCashRight.stats.index
+            ]
+            let numMax = cashArray.reduce(Int.min, { max($0, $1) })
+            let numMin = cashArray.reduce(Int.max, { min($0, $1) })
+            
+            let valueCPU = cashValues.filter { cash in
+                cash.stats.index >= numMin && cash.stats.index <= numMax
+            }
+            cpuCashValue = (valueCPU.randomElement())!
         }
     }
 }

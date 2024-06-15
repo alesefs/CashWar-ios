@@ -56,7 +56,7 @@ struct MainMenuScreen: View {
                 }
                 .frame(width: 300, alignment: .center)
                 .navigationDestination(for: Screens.self) { screen in
-                    NavigationController.navigate(to: screen).navigationBarBackButtonHidden()
+                    NavigationController.navigate(to: screen)//.navigationBarBackButtonHidden()
                 }
             }
         }
