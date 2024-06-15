@@ -268,6 +268,7 @@ struct CashMoney: View {
         .frame(width: 220 / size.fontSize, height: 110 / size.fontSize)
         .offset(x: waitRound ? 0 : offset)
         .animation(.easeInOut(duration: 0.8), value: waitRound)
+        .border(selected ? .red : .clear, width: selected ? (5 / size.fontSize) : 0) 
         
     }
     

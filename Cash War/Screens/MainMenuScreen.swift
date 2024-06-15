@@ -53,12 +53,6 @@ struct MainMenuScreen: View {
                         print("Help click")
                         navigation.path.append(Screens.HelpMenuScreen)
                     }
-                    
-                    CashButton(buttonStats: .negative(title: "End"), enable: true) {
-                        isWin.toggle()
-                        print("End click \(self.isWin)")
-                        navigation.path.append(Screens.EndGameScreen(isWin: self.isWin))
-                    }
                 }
                 .frame(width: 300, alignment: .center)
                 .navigationDestination(for: Screens.self) { screen in

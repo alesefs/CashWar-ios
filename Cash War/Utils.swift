@@ -172,3 +172,15 @@ func chooseCash(intValue: Int) -> CashMoneyStats {
     }
 }
 
+var cashValues = [
+        CashMoneyStats.money1,
+        CashMoneyStats.money2,
+        CashMoneyStats.money5,
+        CashMoneyStats.money10,
+        CashMoneyStats.money20,
+        CashMoneyStats.money50,
+        CashMoneyStats.money100,
+        CashMoneyStats.money200,
+        CashMoneyStats.money500,
+        CashMoneyStats.money1000
+    ]

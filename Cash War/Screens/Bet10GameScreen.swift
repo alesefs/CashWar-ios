@@ -161,18 +161,21 @@ struct Bet10GameScreen: View {
     }
     
     private func showStats(diff: Int) {
+        if playerCash > cpuCash {
+            playerBank += diff
+            cpuBank -= diff
+            
+        } else if playerCash < cpuCash {
+            playerBank -= diff
+            cpuBank += diff
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
             if playerCash > cpuCash {
-                playerBank += diff
-                cpuBank -= diff
-                
                 diffTextPlayer = "+\(diff)"
                 diffTextCPU = "-\(diff)"
                 
             } else if playerCash < cpuCash {
-                playerBank -= diff
-                cpuBank += diff
-                
                 diffTextPlayer = "-\(diff)"
                 diffTextCPU = "+\(diff)"
                 
